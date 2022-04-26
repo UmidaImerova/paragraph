@@ -1,23 +1,35 @@
-import logo from './logo.svg';
+import { useState } from 'react';
+import text from './data';
 import './App.css';
 
 function App() {
+  const [counter, setCounter] = useState(0);
+  const [paragraph, setPharagraph] = useState([])
+
+
+
+  const handleSubmit=(e)=>{
+    e.preventDefault();
+    if (counter<0){
+      return setCounter(0)
+    } else if(counter> text.length){
+      setCounter(text.length)
+    }  setPharagraph(text.slice(0, counter)) 
+  }
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{textAlign:'center'}}>
+    <form onSubmit={handleSubmit}>
+      <h1>TIRED OF BORING LOREM IPSUM?</h1>
+      <span>Paragraphs</span><input type='number' onChange={(e)=>setCounter(e.target.value)}></input> <button>GENERATE</button>
+      <article>
+          {paragraph.map((el, index) => {
+            return <p key={index}>{el}</p>;
+          })}
+        </article>
+   
+    </form>
     </div>
   );
 }
